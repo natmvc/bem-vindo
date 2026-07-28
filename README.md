@@ -43,7 +43,7 @@ Use MP4/H.264 sem áudio automático. Comprima os arquivos antes de publicar. O 
 
 Em `app/config/site.ts`, substitua `YOUTUBE_DOCUMENTARY_URL` pela URL de incorporação do YouTube, no formato `https://www.youtube.com/embed/ID_DO_VIDEO`.
 
-## Executar
+## Executar com Next.js
 
 1. Instale Node.js 22 ou superior.
 2. Execute `pnpm install`.
@@ -54,4 +54,14 @@ Para validar a versão final, execute `pnpm build`.
 
 ## Publicar na Vercel
 
-Importe o repositório no painel da Vercel, mantenha o preset Next.js e publique. Nenhuma variável de ambiente é necessária nesta primeira versão. Antes da publicação oficial, confirme todos os placeholders e links em `app/config/site.ts`.
+Envie o repositório completo ao GitHub e importe-o no painel da Vercel. O arquivo `vercel.json` seleciona o preset Next.js e executa o build nativo da plataforma. A raiz do projeto deve ser a pasta que contém `package.json` e `vercel.json`. Nenhuma variável de ambiente é obrigatória nesta primeira versão. Antes da publicação oficial, confirme todos os placeholders e links em `app/config/site.ts`.
+
+## Executar e publicar no ambiente Sites
+
+O projeto mantém um fluxo separado para o ambiente atual:
+
+- `pnpm dev:sites` — prévia local com vinext;
+- `pnpm build:sites` — build compatível com Sites/Cloudflare;
+- `pnpm start:sites` — execução local do build Sites.
+
+A configuração específica desse ambiente permanece em `.openai/hosting.json` e `vite.config.ts`. A Vercel não utiliza esses arquivos.
