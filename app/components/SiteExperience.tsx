@@ -393,7 +393,7 @@ function NetworksSection() {
   }, [reduced]);
 
   const beginDrag = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (event.pointerType === "mouse" && event.button !== 0) return;
+    if (event.pointerType !== "mouse" || event.button !== 0) return;
     const track = trackRef.current;
     if (!track) return;
     dragRef.current = { pointerId: event.pointerId, startX: event.clientX, startScroll: track.scrollLeft, dragging: true };
@@ -402,7 +402,7 @@ function NetworksSection() {
   };
   const moveDrag = (event: React.PointerEvent<HTMLDivElement>) => {
     const track = trackRef.current;
-    if (!track || !dragRef.current.dragging || dragRef.current.pointerId !== event.pointerId) return;
+    if (!track || event.pointerType !== "mouse" || !dragRef.current.dragging || dragRef.current.pointerId !== event.pointerId) return;
     track.scrollLeft = dragRef.current.startScroll - (event.clientX - dragRef.current.startX);
   };
   const endDrag = (event: React.PointerEvent<HTMLDivElement>) => {
@@ -429,6 +429,9 @@ function NetworksSection() {
         onPointerMove={moveDrag}
         onPointerUp={endDrag}
         onPointerCancel={endDrag}
+        onTouchStart={() => { dragRef.current.dragging = true; setDragging(true); }}
+        onTouchEnd={() => { dragRef.current.dragging = false; setDragging(false); }}
+        onTouchCancel={() => { dragRef.current.dragging = false; setDragging(false); }}
       >
         <div className="network-track">
           {[...networkImages, ...networkImages].map(([src, label], index) => (
@@ -455,7 +458,6 @@ function ProgramsSection() {
           <div className="press-facts">
             <span>{SITE_DETAILS.pressPower.frequency}</span>
             <span>{SITE_DETAILS.pressPower.time}</span>
-            <span>{SITE_DETAILS.pressPower.location}</span>
           </div>
         </div>
       </section>
@@ -601,7 +603,7 @@ function FinalCTA() {
 function Footer() {
   return (
     <footer>
-      <div className="footer-brand"><span className="brand-mark"><img src={churchSymbol} alt="" /></span><strong>MANANCIAIS</strong><p>Há um lugar para você.</p></div>
+      <div className="footer-brand"><span className="brand-mark"><img src={churchSymbol} alt="" /></span><strong>MANANCIAIS</strong></div>
       <div><span>Visite</span><p>{SITE_DETAILS.address}</p><p>{SITE_DETAILS.mainHours}</p></div>
       <div><span>Fale com a gente</span><p>{SITE_DETAILS.phone}</p><a href={SITE_LINKS.instagram}>Instagram</a><a href={SITE_LINKS.youtube}>YouTube</a></div>
       <div className="footer-bottom"><p>© {new Date().getFullYear()} Igreja Mananciais</p><a href="#POLITICA_DE_PRIVACIDADE">Política de privacidade</a></div>

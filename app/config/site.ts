@@ -20,7 +20,6 @@ export const SITE_DETAILS = {
   pressPower: {
     frequency: "Sexta-feira",
     time: "19h30",
-    location: "Barra da Tijuca",
   },
   prayerRoomHours: ["Quarta-feira — 8h", "[DEMAIS HORÁRIOS]"],
 } as const;

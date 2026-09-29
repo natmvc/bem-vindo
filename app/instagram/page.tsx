@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, Camera } from "lucide-react";
-import { instagramProfiles } from "../config/churches";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { instagramChurches, instagramPastorsAndProjects } from "../config/churches";
 
 export const metadata: Metadata = {
   title: "Instagram | Igreja Mananciais",
@@ -21,10 +21,9 @@ export default function InstagramPage() {
       </header>
 
       <section className="instagram-content">
-        <div className="instagram-profile-icon"><Camera size={28} /></div>
+        <div className="instagram-profile-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.7"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none" /></svg></div>
         <p className="eyebrow">Estamos por perto</p>
         <h1>Acompanhe<br />a <em>Mananciais.</em></h1>
-        <p className="instagram-lead">Encontre a igreja, os pastores e os projetos da nossa família nas redes.</p>
 
         <a className="instagram-featured" href="https://www.instagram.com/mananciaisrj/" target="_blank" rel="noreferrer">
           <span className="featured-label">Conta principal</span>
@@ -33,18 +32,27 @@ export default function InstagramPage() {
           <ArrowUpRight size={21} />
         </a>
 
-        <div className="instagram-links" aria-label="Outros perfis oficiais">
+        <div className="instagram-links" aria-label="Perfis de pastores e projetos">
           <p className="eyebrow">Pastores e projetos</p>
-          {instagramProfiles.map((profile) => (
-            <a href={profile.url} target="_blank" rel="noreferrer" key={profile.handle}>
-              <span><strong>{profile.title}</strong><small>{profile.handle}</small></span>
+          {instagramPastorsAndProjects.map((handle) => (
+            <a href={`https://www.instagram.com/${handle.slice(1)}/`} target="_blank" rel="noreferrer" key={handle}>
+              <span><strong>{handle}</strong><small>Pastor ou projeto</small></span>
               <ArrowUpRight size={18} />
             </a>
           ))}
         </div>
-        <p className="instagram-note">Esta página reúne os perfis públicos da igreja e de seus projetos.</p>
+
+        <div className="instagram-links instagram-churches" aria-label="Perfis das congregações">
+          <p className="eyebrow">Congregações</p>
+          {instagramChurches.map((handle) => (
+            <a href={`https://www.instagram.com/${handle.slice(1)}/`} target="_blank" rel="noreferrer" key={handle}>
+              <span><strong>{handle}</strong><small>Congregação</small></span>
+              <ArrowUpRight size={18} />
+            </a>
+          ))}
+        </div>
       </section>
-      <footer className="directory-footer"><Link href="/">Igreja Mananciais · Há um lugar para você</Link></footer>
+      <footer className="directory-footer"><Link href="/">Igreja Mananciais</Link></footer>
     </main>
   );
 }
