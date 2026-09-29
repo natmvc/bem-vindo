@@ -1,9 +1,9 @@
 export const SITE_LINKS = {
   connect: "https://wa.me/5500000000000?text=Ol%C3%A1%2C%20quero%20me%20conectar%20%C3%A0%20Igreja%20Mananciais",
   networks: "https://wa.me/5500000000000?text=Ol%C3%A1%2C%20quero%20conhecer%20uma%20rede",
-  instagram: "https://instagram.com/SEU_USUARIO",
+  instagram: "/instagram",
   youtube: "https://youtube.com/@SEU_CANAL",
-  maps: "https://maps.google.com/?q=ENDERECO_DA_IGREJA",
+  maps: "/igrejas",
   mamaAline: "#LINK_MAMA_ALINE",
   documentary: "YOUTUBE_DOCUMENTARY_URL",
   schools: {
@@ -14,13 +14,13 @@ export const SITE_LINKS = {
 } as const;
 
 export const SITE_DETAILS = {
-  address: "[ENDEREÇO DA IGREJA]",
-  phone: "[TELEFONE]",
-  mainHours: "[HORÁRIOS PRINCIPAIS]",
+  address: "Rua Augusto Camossa Saldanha, 607 · Barra da Tijuca, Rio de Janeiro",
+  phone: "(21) 2437-7605",
+  mainHours: "Domingo às 8h30 e 11h30 · Quarta-feira às 19h30",
   pressPower: {
-    frequency: "[FREQUÊNCIA DO PRESS POWER]",
-    time: "[HORÁRIO]",
-    location: "[LOCAL]",
+    frequency: "Sexta-feira",
+    time: "19h30",
+    location: "Barra da Tijuca",
   },
   prayerRoomHours: ["Quarta-feira — 8h", "[DEMAIS HORÁRIOS]"],
 } as const;

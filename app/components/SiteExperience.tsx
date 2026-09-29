@@ -24,6 +24,8 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { MEDIA, SITE_DETAILS, SITE_LINKS } from "../config/site";
 
+const churchSymbol = "/images/logo-m-branca.png";
+
 const navItems = [
   ["Início", "inicio"],
   ["Quem Somos", "quem-somos"],
@@ -99,7 +101,7 @@ const schools = [
   {
     number: "03",
     title: "Turma Especial",
-    format: "Seminário integral · 2 anos",
+    format: "Seminário integral · 1 ano",
     text: "Formação de discípulos que fazem da vontade de Deus uma prioridade.",
     detail: "Conhecimento bíblico aplicado à vida, à igreja e à sociedade",
     href: SITE_LINKS.schools.specialClass,
@@ -189,7 +191,7 @@ function Header() {
       <header className="site-header">
         <a className="brand" href="#inicio" aria-label="Igreja Mananciais — início">
           <span className="brand-mark">
-            <img src="/images/logo-m-branca.png" alt="" />
+            <img src={churchSymbol} alt="" />
           </span>
           <span>MANANCIAIS</span>
         </a>
@@ -239,28 +241,13 @@ function Header() {
 }
 
 function FloatingConnectButton() {
-  const [scrolling, setScrolling] = useState(false);
-  useEffect(() => {
-    let timer: ReturnType<typeof setTimeout>;
-    const onScroll = () => {
-      setScrolling(true);
-      clearTimeout(timer);
-      timer = setTimeout(() => setScrolling(false), 220);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, []);
   return (
     <motion.a
-      className={`floating-connect ${scrolling ? "compact" : ""}`}
+      className="floating-connect"
       href={SITE_LINKS.connect}
       target="_blank"
       rel="noreferrer"
       aria-label="Quero me conectar a um facilitador"
-      layout
     >
       <MessageCircle size={19} />
       <span>Quero me conectar <em>a um facilitador</em></span>
@@ -318,9 +305,8 @@ function AboutSection() {
         </div>
         <div className="story-moments">
           <div className="timeline"><span>2004</span><i /><span>hoje</span></div>
-          {moments.map(([tag, text], index) => (
-            <Reveal className="story-moment" key={tag}>
-              <span>0{index + 1} / {tag}</span>
+          {moments.map(([, text], index) => (
+            <Reveal className="story-moment" key={index}>
               <p>{text}</p>
             </Reveal>
           ))}
@@ -379,12 +365,53 @@ function MinistrySection({ item }: { item: (typeof ministryCards)[number] }) {
 }
 
 function NetworksSection() {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const dragRef = useRef({ pointerId: -1, startX: 0, startScroll: 0, dragging: false });
+  const [dragging, setDragging] = useState(false);
+  const reduced = useReducedMotion();
   const networkImages = [
     ["/images/redes-01.jpg", "Comunhão"],
     ["/images/redes-02.jpg", "Cuidado"],
     ["/images/redes-03.jpg", "Discipulado"],
     ["/images/redes-04.jpg", "Conexão"],
   ] as const;
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track || reduced) return;
+    let frame = 0;
+    const advance = () => {
+      if (!dragRef.current.dragging) {
+        track.scrollLeft += 0.45;
+        const loopPoint = track.scrollWidth / 2;
+        if (loopPoint > 0 && track.scrollLeft >= loopPoint) track.scrollLeft -= loopPoint;
+      }
+      frame = window.requestAnimationFrame(advance);
+    };
+    frame = window.requestAnimationFrame(advance);
+    return () => window.cancelAnimationFrame(frame);
+  }, [reduced]);
+
+  const beginDrag = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    const track = trackRef.current;
+    if (!track) return;
+    dragRef.current = { pointerId: event.pointerId, startX: event.clientX, startScroll: track.scrollLeft, dragging: true };
+    setDragging(true);
+    track.setPointerCapture(event.pointerId);
+  };
+  const moveDrag = (event: React.PointerEvent<HTMLDivElement>) => {
+    const track = trackRef.current;
+    if (!track || !dragRef.current.dragging || dragRef.current.pointerId !== event.pointerId) return;
+    track.scrollLeft = dragRef.current.startScroll - (event.clientX - dragRef.current.startX);
+  };
+  const endDrag = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (dragRef.current.pointerId !== event.pointerId) return;
+    dragRef.current.dragging = false;
+    setDragging(false);
+    const track = trackRef.current;
+    if (track?.hasPointerCapture(event.pointerId)) track.releasePointerCapture(event.pointerId);
+  };
   return (
     <section className="networks section-pad" id="redes">
       <div className="network-copy">
@@ -394,7 +421,15 @@ function NetworksSection() {
         <small>As programações acontecem mensalmente, de acordo com a agenda geral da igreja.</small>
         <a className="button button-dark" href={SITE_LINKS.networks} target="_blank" rel="noreferrer">Quero conhecer uma rede <ArrowRight /></a>
       </div>
-      <div className="network-marquee" aria-label="Imagens das redes da Igreja Mananciais">
+      <div
+        className={`network-marquee${dragging ? " is-dragging" : ""}`}
+        aria-label="Imagens das redes da Igreja Mananciais. Arraste para navegar."
+        ref={trackRef}
+        onPointerDown={beginDrag}
+        onPointerMove={moveDrag}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+      >
         <div className="network-track">
           {[...networkImages, ...networkImages].map(([src, label], index) => (
             <div className="network-slide" key={`${src}-${index}`}>
@@ -411,7 +446,7 @@ function ProgramsSection() {
   return (
     <div id="programacoes">
       <section className="press-power section-pad">
-        <MediaPlaceholder src={MEDIA.pressPower} label="VÍDEO / FOTO · PRESS POWER" dark />
+        <MediaPlaceholder src={MEDIA.pressPower} label="VÍDEO / FOTO · PRESS POWER" dark className="press-background" />
         <div className="press-overlay" />
         <div className="press-copy">
           <Reveal><p className="eyebrow light">Nosso culto profético</p></Reveal>
@@ -494,7 +529,7 @@ function MamaAlineSection() {
         <p className="eyebrow">Família · conteúdo</p>
         <h2>Mama<br /><em>Aline</em></h2>
         <p>Princípios e valores cristãos, conselhos práticos e histórias para tornar a maternidade e a paternidade mais leves e sábias.</p>
-        <a className="button button-dark" href={SITE_LINKS.mamaAline}>Conhecer o projeto <ArrowRight /></a>
+        <a className="button button-dark" href={SITE_LINKS.mamaAline}>Conhecer o canal <ArrowRight /></a>
       </div>
       <div className="mama-editorial">
         <MediaPlaceholder src="/images/mama-aline.jpg" label="FOTO · MAMA ALINE" />
@@ -538,7 +573,7 @@ function SocialSection() {
         <p>Acompanhe nossas programações, mensagens e tudo o que acontece na Igreja Mananciais.</p>
       </div>
       <div className="social-links">
-        <a href={SITE_LINKS.instagram} target="_blank" rel="noreferrer"><ExternalLink /><span>Instagram</span><ArrowRight /></a>
+        <a href={SITE_LINKS.instagram}><ExternalLink /><span>Instagram</span><ArrowRight /></a>
         <a href={SITE_LINKS.youtube} target="_blank" rel="noreferrer"><CirclePlay /><span>YouTube</span><ArrowRight /></a>
       </div>
       <div className="social-strip" aria-label="Espaço para publicações recentes">
@@ -557,7 +592,7 @@ function FinalCTA() {
       <p>Queremos conhecer você, ouvir sua história e ajudar nos seus próximos passos.</p>
       <div className="button-row">
         <a className="button button-dark" href={SITE_LINKS.connect} target="_blank" rel="noreferrer"><MessageCircle /> Quero me conectar</a>
-        <a className="button button-outline-dark" href={SITE_LINKS.maps} target="_blank" rel="noreferrer">Como chegar <ArrowRight /></a>
+        <a className="button button-outline-dark" href="/igrejas">Nossas Igrejas <ArrowRight /></a>
       </div>
     </section>
   );
@@ -566,7 +601,7 @@ function FinalCTA() {
 function Footer() {
   return (
     <footer>
-      <div className="footer-brand"><span className="brand-mark">M</span><strong>MANANCIAIS</strong><p>Há um lugar para você.</p></div>
+      <div className="footer-brand"><span className="brand-mark"><img src={churchSymbol} alt="" /></span><strong>MANANCIAIS</strong><p>Há um lugar para você.</p></div>
       <div><span>Visite</span><p>{SITE_DETAILS.address}</p><p>{SITE_DETAILS.mainHours}</p></div>
       <div><span>Fale com a gente</span><p>{SITE_DETAILS.phone}</p><a href={SITE_LINKS.instagram}>Instagram</a><a href={SITE_LINKS.youtube}>YouTube</a></div>
       <div className="footer-bottom"><p>© {new Date().getFullYear()} Igreja Mananciais</p><a href="#POLITICA_DE_PRIVACIDADE">Política de privacidade</a></div>
