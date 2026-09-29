@@ -307,8 +307,9 @@ footer p, footer a { margin: 0; font-size: 12px; line-height: 1.5; color: rgba(2
   .menu-button span { display: none; }
   .menu-button { padding: 12px; }
   .menu-top .brand > span:last-child { display: inline; }
-  .hero-copy { bottom: 18vh; }
-  .hero-copy h1 { font-size: clamp(50px, 15vw, 72px); line-height: .87; }
+  .hero-copy { left: 18px; bottom: 18vh; width: calc(100% - 36px); }
+  .hero-copy h1 { font-size: clamp(46px, 13vw, 68px); line-height: .9; letter-spacing: -.07em; }
+  .hero-copy h1 .gradient-word { display: inline-block; padding-right: .08em; margin-right: -.08em; }
   .scroll-cue { right: auto; left: 22px; }
   .about { margin-top: -8vh; }
   .about-intro { padding-bottom: 55px; }
@@ -354,7 +355,7 @@ footer p, footer a { margin: 0; font-size: 12px; line-height: 1.5; color: rgba(2
 }
 
 @media (max-width: 360px) {
-  .hero-copy h1 { font-size: 50px; }
+  .hero-copy h1 { font-size: clamp(42px, 14vw, 50px); }
   h2 { font-size: 45px; }
   .menu-overlay nav a { font-size: 26px; }
   .school-card { min-width: 88vw; }
