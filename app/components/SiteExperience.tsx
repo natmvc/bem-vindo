@@ -602,11 +602,10 @@ function FinalCTA() {
 
 function Footer() {
   return (
-    <footer>
-      <div className="footer-brand"><span className="brand-mark"><img src={churchSymbol} alt="" /></span><strong>MANANCIAIS</strong></div>
-      <div><span>Visite</span><p>{SITE_DETAILS.address}</p><p>{SITE_DETAILS.mainHours}</p></div>
-      <div><span>Fale com a gente</span><p>{SITE_DETAILS.phone}</p><a href={SITE_LINKS.instagram}>Instagram</a><a href={SITE_LINKS.youtube}>YouTube</a></div>
-      <div className="footer-bottom"><p>© {new Date().getFullYear()} Igreja Mananciais</p><a href="#POLITICA_DE_PRIVACIDADE">Política de privacidade</a></div>
+    <footer className="site-footer">
+      <a href="#inicio" className="footer-symbol" aria-label="Igreja Mananciais — início"><span className="brand-mark"><img src={churchSymbol} alt="" /></span></a>
+      <p>© 2026 Igreja Mananciais</p>
+      <a href="#POLITICA_DE_PRIVACIDADE">Política de privacidade</a>
     </footer>
   );
 }

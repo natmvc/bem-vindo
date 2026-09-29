@@ -202,13 +202,9 @@ h2 em { color: var(--blue); font-family: "Helvetica Neue", Helvetica, Arial, san
 .final-cta h2 em { color: var(--ink); }
 .final-cta > p:not(.eyebrow) { max-width: 570px; font-size: 19px; line-height: 1.5; }
 .cta-spark { position: absolute; width: 55vw; height: 55vw; color: rgba(255,255,255,.08); }
-footer { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 55px; padding: 80px max(22px, calc((100vw - 1320px) / 2)) 125px; color: white; background: var(--ink); }
-footer > div { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
-footer span { font-size: 9px; letter-spacing: .15em; text-transform: uppercase; color: var(--blue); }
+footer { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 30px max(22px, calc((100vw - 1320px) / 2)); color: white; background: var(--ink); }
 footer p, footer a { margin: 0; font-size: 12px; line-height: 1.5; color: rgba(255,255,255,.6); }
-.footer-brand strong { margin-top: 10px; letter-spacing: .15em; }
-.footer-brand p { font-style: italic; font-weight: 400; }
-.footer-bottom { grid-column: 1/-1; flex-direction: row; justify-content: space-between; padding-top: 28px; border-top: 1px solid rgba(255,255,255,.15); }
+.footer-symbol { display: inline-flex; align-items: center; }
 
 .floating-connect { position: fixed; z-index: 90; right: 22px; bottom: 20px; display: flex; align-items: center; gap: 10px; min-height: 54px; padding: 10px 16px; border: 1px solid rgba(255,255,255,.3); border-radius: 999px; color: white; background: var(--ink); box-shadow: 0 10px 35px rgba(7,21,31,.28); }
 .floating-connect span { font-size: 11px; font-weight: 700; }
@@ -240,8 +236,7 @@ footer p, footer a { margin: 0; font-size: 12px; line-height: 1.5; color: rgba(2
 .church-map-link { display: inline-flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 15px; font-size: 12px; font-weight: 750; }
 .church-map-link svg { transition: transform .2s ease; }
 .church-map-link:hover svg { transform: translate(2px, -2px); }
-.directory-footer { display: flex; justify-content: space-between; gap: 20px; padding: 24px max(22px, calc((100vw - 1320px) / 2)); border-top: 1px solid rgba(255,255,255,.13); color: rgba(255,255,255,.58); font-size: 11px; }
-.directory-footer p { margin: 0; }
+.directory-footer { gap: 20px; padding-top: 24px; padding-bottom: 24px; border-top: 1px solid rgba(255,255,255,.13); color: rgba(255,255,255,.58); font-size: 11px; }
 
 .instagram-directory { display: flex; flex-direction: column; }
 .instagram-content { width: min(580px, calc(100% - 40px)); margin: auto; padding: 50px 0 72px; text-align: center; }
@@ -270,7 +265,7 @@ footer p, footer a { margin: 0; font-size: 12px; line-height: 1.5; color: rgba(2
   .directory-intro { padding-top: 85px; padding-bottom: 55px; }
   .church-directory { grid-template-columns: 1fr; gap: 10px; padding-bottom: 60px; }
   .church-card { min-height: auto; padding: 24px; }
-  .directory-footer { flex-direction: column; }
+  .directory-footer { flex-direction: row; }
   .instagram-content { padding-top: 30px; }
 }
 
@@ -353,8 +348,7 @@ footer p, footer a { margin: 0; font-size: 12px; line-height: 1.5; color: rgba(2
   .social-links a { min-height: 105px; }
   .social-strip { display: flex; overflow-x: auto; }
   .social-strip span { min-width: 72vw; }
-  footer { grid-template-columns: 1fr 1fr; padding-bottom: 150px; }
-  .footer-brand { grid-column: 1/-1; }
+  footer { flex-wrap: wrap; padding-bottom: 110px; }
   .floating-connect { left: 12px; right: 12px; bottom: 10px; justify-content: center; }
   .floating-connect span em { display: none; }
 }
@@ -364,8 +358,7 @@ footer p, footer a { margin: 0; font-size: 12px; line-height: 1.5; color: rgba(2
   h2 { font-size: 45px; }
   .menu-overlay nav a { font-size: 26px; }
   .school-card { min-width: 88vw; }
-  footer { grid-template-columns: 1fr; }
-  footer > div { grid-column: 1; }
+  footer { gap: 16px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

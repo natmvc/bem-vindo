@@ -52,7 +52,11 @@ export default function InstagramPage() {
           ))}
         </div>
       </section>
-      <footer className="directory-footer"><Link href="/">Igreja Mananciais</Link></footer>
+      <footer className="site-footer directory-footer">
+        <Link href="/" className="footer-symbol" aria-label="Igreja Mananciais — início"><span className="brand-mark"><Image src="/images/logo-m-branca.png" alt="" width={19} height={19} /></span></Link>
+        <p>© 2026 Igreja Mananciais</p>
+        <Link href="#POLITICA_DE_PRIVACIDADE">Política de privacidade</Link>
+      </footer>
     </main>
   );
 }
