@@ -8,20 +8,21 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
-  title: "Igreja Mananciais | Há um lugar para você",
-  description: "Conheça a Igreja Mananciais, nossas programações, ministérios, escolas e formas de se conectar. É um prazer ter você aqui.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://bem-vindo-inky.vercel.app"),
+  title: "Bem vindo à Igreja Mananciais",
+  description: "Saiba mais e conecte-se",
   icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },
   openGraph: {
-    title: "Igreja Mananciais | Há um lugar para você",
-    description: "Acolhimento, presença, família, propósito, movimento e conexão.",
+    title: "Bem vindo à Igreja Mananciais",
+    description: "Saiba mais e conecte-se",
     type: "website",
     locale: "pt_BR",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Igreja Mananciais — Há um lugar para você." }],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Bem vindo à Igreja Mananciais" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Igreja Mananciais | Há um lugar para você",
+    title: "Bem vindo à Igreja Mananciais",
+    description: "Saiba mais e conecte-se",
     images: ["/og.png"],
   },
 };
